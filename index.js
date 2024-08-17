@@ -1,7 +1,7 @@
 const fs = require("node:fs/promises")
 const path = require("node:path")
 const axios = require("axios")
-const { difficultyToDirMap } = require("./utils.js")
+const { difficultyToDirMap, sanitizeFolderName } = require("./utils.js")
 const scrapKatas = require("./pup.js")
 
 const BASE_URL = `https://www.codewars.com/api/v1/users/${process.env.CODEWARS_USERNAME}/code-challenges/completed`
@@ -61,14 +61,22 @@ const fetchKataDetails = async () => {
       const { slug, description } = data
       const dirName = difficultyToDirMap[data.rank.name]
 
-      await fs.mkdir(path.join(__dirname, `katas/${dirName}/${slug}`), {
-        recursive: true
-      })
-
-      await fs.writeFile(
-        path.join(__dirname, `katas/${dirName}/${slug}/README.md`),
-        description
-      )
+      await fs
+        .mkdir(
+          path.join(__dirname, `katas/${dirName}/${sanitizeFolderName(slug)}`),
+          {
+            recursive: true
+          }
+        )
+        .then(() =>
+          fs.writeFile(
+            path.join(
+              __dirname,
+              `katas/${dirName}/${sanitizeFolderName(slug)}/README.md`
+            ),
+            description
+          )
+        )
     } catch (error) {
       if (retryCount < maxRetries) {
         const waitTime = Math.pow(2, retryCount) * 1000

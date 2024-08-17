@@ -64,4 +64,12 @@ const extensions = {
   vb: "vb"
 }
 
-module.exports = { extensions, difficultyToDirMap }
+function sanitizeFolderName(name) {
+  // Define a regex pattern to match invalid characters
+  const invalidChars = /[<>:"/\\|?*]+/g
+
+  // Replace invalid characters with an underscore
+  return name.replace(invalidChars, "_")
+}
+
+module.exports = { extensions, difficultyToDirMap, sanitizeFolderName }

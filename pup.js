@@ -1,7 +1,11 @@
 const fs = require("node:fs")
 const path = require("node:path")
 const puppeteer = require("puppeteer")
-const { difficultyToDirMap, extensions } = require("./utils.js")
+const {
+  difficultyToDirMap,
+  extensions,
+  sanitizeFolderName
+} = require("./utils.js")
 const maxRetries = 10000
 
 const scrapKatas = async (katas) => {
@@ -66,7 +70,9 @@ const scrapKatas = async (katas) => {
 
           fs.writeFile(
             path.join(
-              `${__dirname}/katas/${difficultyToDirMap[rank]}/${kata.slug}/solution.${extension}`
+              `${__dirname}/katas/${
+                difficultyToDirMap[rank]
+              }/${sanitizeFolderName(kata.slug)}/solution.${extension}`
             ),
             codeText,
             "utf-8",
