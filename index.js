@@ -21,7 +21,7 @@ async function main() {
     await scrapKatas(katas)
   } catch (error) {
     console.log(error)
-    fs.writeFileSync(
+    await fs.writeFile(
       path.join(__dirname, "/error", `${Date.now().toString()}.md`),
       JSON.stringify(error)
     )
