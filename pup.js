@@ -9,22 +9,31 @@ const {
 const maxRetries = 10000
 
 const scrapKatas = async (katas) => {
+  console.log("It failed on line 14")
   const browser = await puppeteer.launch()
+
+  console.log("It failed on line 17")
   const page = await browser.newPage()
 
   // Navigate to the page
+  console.log("It failed on line 20")
   await page.goto("https://www.codewars.com/users/sign_in", {
     waitUntil: "networkidle2"
   })
+
+  console.log("It failed on line 25")
   await page.setViewport({ width: 1080, height: 1024 })
 
   // Fill in email and password
+  console.log("It failed on line 29")
   await page.type("#user_email", process.env.CODEWARS_EMAIL)
   await page.type("#user_password", process.env.CODEWARS_PASSWORD)
 
   // Click the submit button
+  console.log("It failed on line 34")
   await page.click("#new_user button[type=submit]")
 
+  console.log("It failed on line 37")
   await page.waitForNavigation({ waitUntil: "networkidle2" })
   let retryCount = 0
   let waitTime = 1000
@@ -35,6 +44,9 @@ const scrapKatas = async (katas) => {
         const kata = katas[index]
         const language = kata["completedLanguages"][0]
         const extension = extensions[language]
+
+        console.log("It failed on line 49")
+
         await page.goto(
           `https://www.codewars.com/kata/${kata.id}/solutions/${language}/me/newest`,
           {
