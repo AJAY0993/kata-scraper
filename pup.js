@@ -57,7 +57,7 @@ const scrapKatas = async (katas) => {
     }
 
     console.log("Submitting the sign-in form...")
-    await page.click("#new_user button[type=submit]")
+    await page.click(`button.is-red[type="submit"]`)
 
     console.log("Waiting for navigation after sign-in...")
     await page.waitForNavigation({ waitUntil: "networkidle2" })
