@@ -10,7 +10,10 @@ const maxRetries = 10000
 
 const scrapKatas = async (katas) => {
   console.log("It failed on line 14")
-  const browser = await puppeteer.launch()
+  const browser = await puppeteer.launch({
+    headless: true,
+    timeout: 10000
+  })
 
   console.log("It failed on line 17")
   const page = await browser.newPage()
