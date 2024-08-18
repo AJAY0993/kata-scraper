@@ -20,33 +20,36 @@ const scrapKatas = async (katas) => {
     console.log("Error 💥", err)
   }
 
-  console.log("It failed on line 17")
+  console.log("It failed on line 24")
   const page = await browser.newPage()
 
   // Navigate to the page
-  console.log("It failed on line 20")
+  console.log("It failed on line 28")
   await page.goto("https://www.codewars.com/users/sign_in", {
     waitUntil: "networkidle2"
   })
 
-  console.log("It failed on line 25")
+  console.log("It failed on line 33")
   await page.setViewport({ width: 1080, height: 1024 })
 
   // Fill in email and password
-  console.log("It failed on line 29")
+  console.log("It failed on line 37")
   await page.type("#user_email", process.env.CODEWARS_EMAIL)
+
+  console.log("It failed on line 39")
   await page.type("#user_password", process.env.CODEWARS_PASSWORD)
 
   // Click the submit button
-  console.log("It failed on line 34")
+  console.log("It failed on line 43")
   await page.click("#new_user button[type=submit]")
 
-  console.log("It failed on line 37")
+  console.log("It failed on line 46")
   await page.waitForNavigation({ waitUntil: "networkidle2" })
   let retryCount = 0
   let waitTime = 1000
 
   while (retryCount < maxRetries) {
+    console.log("In the loop")
     for (let index in katas) {
       try {
         const kata = katas[index]
