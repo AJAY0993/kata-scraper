@@ -10,71 +10,74 @@ const {
 const maxRetries = 10000
 
 const scrapKatas = async (katas) => {
-  console.log("It failed on line 14")
+  console.log("Starting the scraping process...")
+
   try {
     browser = await puppeteer.launch({
       headless: true,
       timeout: 10000
     })
   } catch (err) {
-    console.log("Error 💥", err)
+    console.log("Error during browser launch 💥", err)
+    return // Exit if browser launch fails
   }
 
-  console.log("It failed on line 24")
+  console.log("Browser launched successfully.")
   const page = await browser.newPage()
 
-  // Navigate to the page
-  console.log("It failed on line 28")
-  await page.goto("https://www.codewars.com/users/sign_in", {
-    waitUntil: "networkidle2"
-  })
+  try {
+    console.log("Navigating to Codewars sign-in page...")
+    await page.goto("https://www.codewars.com/users/sign_in", {
+      waitUntil: "networkidle2"
+    })
 
-  console.log("It failed on line 33")
-  await page.setViewport({ width: 1080, height: 1024 })
+    console.log("Setting viewport size...")
+    await page.setViewport({ width: 1080, height: 1024 })
 
-  await page.waitForSelector("#user_email", { visible: true })
-  await page.waitForSelector("#user_password", { visible: true })
+    console.log("Waiting for email and password input fields...")
+    await page.waitForSelector("#user_email", { visible: true, timeout: 60000 })
+    await page.waitForSelector("#user_password", {
+      visible: true,
+      timeout: 60000
+    })
 
-  const emailInput = await page.$("#user_email")
-  const passwordInput = await page.$("#user_password")
+    const emailInput = await page.$("#user_email")
+    const passwordInput = await page.$("#user_password")
 
-  console.log(emailInput, passwordInput)
-  console.log("Email:", process.env.CODEWARS_EMAIL ? "Set" : "Not Set")
-  console.log("Password:", process.env.CODEWARS_PASSWORD ? "Set" : "Not Set")
+    console.log(emailInput, passwordInput)
+    console.log("Email:", process.env.CODEWARS_EMAIL ? "Set" : "Not Set")
+    console.log("Password:", process.env.CODEWARS_PASSWORD ? "Set" : "Not Set")
 
-  if (emailInput && passwordInput) {
-    console.log("Found email and password input fields")
-    await emailInput.type(process.env.CODEWARS_EMAIL)
-    await passwordInput.type(process.env.CODEWARS_PASSWORD)
-  } else {
-    console.log("Could not find email or password input fields")
+    if (emailInput && passwordInput) {
+      console.log("Found email and password input fields")
+      await emailInput.type(process.env.CODEWARS_EMAIL)
+      await passwordInput.type(process.env.CODEWARS_PASSWORD)
+    } else {
+      throw new Error("Could not find email or password input fields")
+    }
+
+    console.log("Submitting the sign-in form...")
+    await page.click("#new_user button[type=submit]")
+
+    console.log("Waiting for navigation after sign-in...")
+    await page.waitForNavigation({ waitUntil: "networkidle2" })
+  } catch (err) {
+    console.log("Error during the login process 💥", err)
+    await browser.close()
+    return // Exit if login fails
   }
 
-  console.log("It failed on line 37")
-  await page.type("#user_email", process.env.CODEWARS_EMAIL)
-
-  console.log("It failed on line 39")
-  await page.type("#user_password", process.env.CODEWARS_PASSWORD)
-
-  // Click the submit button
-  console.log("It failed on line 43")
-  await page.click("#new_user button[type=submit]")
-
-  console.log("It failed on line 46")
-  await page.waitForNavigation({ waitUntil: "networkidle2" })
   let retryCount = 0
   let waitTime = 1000
 
   while (retryCount < maxRetries) {
-    console.log("In the loop")
     for (let index in katas) {
       try {
         const kata = katas[index]
         const language = kata["completedLanguages"][0]
         const extension = extensions[language]
 
-        console.log("It failed on line 49")
-
+        console.log("Navigating to kata solution page...")
         await page.goto(
           `https://www.codewars.com/kata/${kata.id}/solutions/${language}/me/newest`,
           {
@@ -92,13 +95,10 @@ const scrapKatas = async (katas) => {
 
         if (rank) {
           const codeText = await page.evaluate(() => {
-            // Locate the element with ID 'solutions_list'
             const solutionsList = document.getElementById("solutions_list")
             if (solutionsList) {
-              // Find the first <div> inside 'solutions_list'
               const solutionItem = solutionsList.querySelector("div")
               if (solutionItem) {
-                // Extract text from <pre> inside the <div>
                 const preTag = solutionItem.querySelector("pre")
                 if (preTag) {
                   return preTag.textContent
@@ -108,31 +108,41 @@ const scrapKatas = async (katas) => {
             return "//null"
           })
 
-          fs.writeFile(
-            path.join(
-              `${__dirname}/katas/${
-                difficultyToDirMap[rank]
-              }/${sanitizeFolderName(kata.slug)}/solution.${extension}`
-            ),
-            codeText,
-            "utf-8",
-            (err) => {
-              if (err) console.log(err)
-              else console.log("success")
-            }
+          const dirPath = path.join(
+            `${__dirname}/katas/${
+              difficultyToDirMap[rank]
+            }/${sanitizeFolderName(kata.slug)}`
           )
-          console.log("File done", kata.slug, rank)
+          const filePath = path.join(dirPath, `solution.${extension}`)
+
+          // Ensure directory exists before writing
+          if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true })
+          }
+
+          fs.writeFile(filePath, codeText, "utf-8", (err) => {
+            if (err) console.log("Error writing file 💥", err)
+            else console.log("File saved successfully", kata.slug, rank)
+          })
         }
       } catch (error) {
-        console.log(error, `\n Retrying in ${waitTime}`)
+        console.log(
+          "Error processing kata 💥",
+          error,
+          `\n Retrying in ${waitTime}ms`
+        )
         await new Promise((resolve) => setTimeout(resolve, waitTime))
         waitTime *= 2
+        retryCount++
       }
     }
 
     break
-  } // Close the browser
+  }
+
+  console.log("Closing the browser...")
   await browser.close()
+  console.log("Scraping process completed.")
 }
 
 module.exports = scrapKatas
