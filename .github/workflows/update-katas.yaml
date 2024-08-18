@@ -3,17 +3,21 @@ name: Scrape New CodeWars Solved Katas
 on:
   workflow_dispatch:
   schedule:
-    - cron: "55 19 * * *"
+    - cron: "30 18 * * *"  # 12:00 AM IST
 
 jobs:
   scrape:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Google Chrome Chrome
+      - name: Install Chrome dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libnss3 lsof
+
+      - name: Install Google Chrome
         run: npx @puppeteer/browsers install chrome@stable
 
       - name: Set up Node
