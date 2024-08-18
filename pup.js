@@ -32,7 +32,26 @@ const scrapKatas = async (katas) => {
   console.log("It failed on line 33")
   await page.setViewport({ width: 1080, height: 1024 })
 
-  // Fill in email and password
+  await page.waitForSelector("#user_email", { visible: true })
+  await page.waitForSelector("#user_password", { visible: true })
+
+  const emailInput = await page.$("#user_email")
+  const passwordInput = await page.$("#user_password")
+
+  if (emailInput && passwordInput) {
+    console.log("Found email and password input fields")
+    await emailInput.type(process.env.CODEWARS_EMAIL)
+    await passwordInput.type(process.env.CODEWARS_PASSWORD)
+  } else {
+    console.log("Could not find email or password input fields")
+  }
+
+  console.log("Email:", process.env.CODEWARS_EMAIL ? "Set" : "Not Set")
+  console.log("Password:", process.env.CODEWARS_PASSWORD ? "Set" : "Not Set")
+
+  await emailInput.type(process.env.CODEWARS_EMAIL)
+  await passwordInput.type(process.env.CODEWARS_PASSWORD)
+
   console.log("It failed on line 37")
   await page.type("#user_email", process.env.CODEWARS_EMAIL)
 
