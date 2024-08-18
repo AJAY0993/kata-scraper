@@ -44,7 +44,6 @@ const scrapKatas = async (katas) => {
     const emailInput = await page.$("#user_email")
     const passwordInput = await page.$("#user_password")
 
-    console.log(emailInput, passwordInput)
     console.log("Email:", process.env.CODEWARS_EMAIL ? "Set" : "Not Set")
     console.log("Password:", process.env.CODEWARS_PASSWORD ? "Set" : "Not Set")
 
@@ -57,9 +56,8 @@ const scrapKatas = async (katas) => {
     }
 
     console.log("Submitting the sign-in form...")
-    await page.$$eval(`button.is-red[type="submit"]`, (elements) =>
-      elements[0].click()
-    )
+    const form = await page.$("form")
+    await form.evaluate((form) => form.submit())
 
     console.log("Waiting for navigation after sign-in...")
     await page.waitForNavigation({ waitUntil: "networkidle2" })
