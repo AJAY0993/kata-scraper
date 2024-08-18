@@ -38,6 +38,7 @@ const scrapKatas = async (katas) => {
   const emailInput = await page.$("#user_email")
   const passwordInput = await page.$("#user_password")
 
+  console.log(emailInput, passwordInput)
   console.log("Email:", process.env.CODEWARS_EMAIL ? "Set" : "Not Set")
   console.log("Password:", process.env.CODEWARS_PASSWORD ? "Set" : "Not Set")
 
@@ -48,9 +49,6 @@ const scrapKatas = async (katas) => {
   } else {
     console.log("Could not find email or password input fields")
   }
-
-  await emailInput.type(process.env.CODEWARS_EMAIL)
-  await passwordInput.type(process.env.CODEWARS_PASSWORD)
 
   console.log("It failed on line 37")
   await page.type("#user_email", process.env.CODEWARS_EMAIL)
