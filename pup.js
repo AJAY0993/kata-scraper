@@ -16,7 +16,7 @@ const scrapKatas = async (katas) => {
 
   try {
     browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       timeout: 10000
     })
   } catch (err) {
