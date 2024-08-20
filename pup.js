@@ -54,7 +54,7 @@ const scrapKatas = async (katas) => {
       await emailInput.type(process.env.CODEWARS_EMAIL)
       console.log("Typed email")
 
-      await page.waitForTimeout(1000)
+      await page.waitForSelector("#user_password")
 
       console.log("Typing password")
       await passwordInput.type(process.env.CODEWARS_PASSWORD)
