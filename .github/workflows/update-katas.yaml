@@ -3,7 +3,7 @@ name: Scrape New CodeWars Solved Katas
 on:
   workflow_dispatch:
   schedule:
-    - cron: "30 18 * * *"  # 12:00 AM IST
+    - cron: "30 18 * * *" # 12:00 AM IST
 
 jobs:
   scrape:
@@ -23,7 +23,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: "v22.5.1"
 
       - name: Install dependencies
         run: npm install
