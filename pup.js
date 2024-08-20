@@ -1,6 +1,8 @@
 const fs = require("node:fs")
 const path = require("node:path")
 const puppeteer = require("puppeteer")
+const { PuppeteerScreenRecorder } = require("puppeteer-screen-recorder")
+
 let browser
 const {
   difficultyToDirMap,
@@ -14,7 +16,7 @@ const scrapKatas = async (katas) => {
 
   try {
     browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
       timeout: 10000
     })
   } catch (err) {
@@ -24,6 +26,10 @@ const scrapKatas = async (katas) => {
 
   console.log("Browser launched successfully.")
   const page = await browser.newPage()
+
+  const recorder = new PuppeteerScreenRecorder(page)
+
+  await recorder.start("./recording.mp4")
 
   try {
     console.log("Navigating to Codewars sign-in page...")
@@ -61,6 +67,8 @@ const scrapKatas = async (katas) => {
     await browser.close()
     return // Exit if login fails
   }
+
+  await recorder.stop()
 
   let retryCount = 0
   let waitTime = 1000

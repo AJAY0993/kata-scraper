@@ -15,7 +15,7 @@ const concurrencyLimit = 5
 async function main() {
   try {
     await fetchKatas()
-    await fetchKataDetails()
+    // await fetchKataDetails()
     console.log("All kata details fetched.")
     console.log("Starting scraping solutions")
     await scrapKatas(katas)

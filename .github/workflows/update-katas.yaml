@@ -43,5 +43,4 @@ jobs:
         with:
           default_author: github_actor
           message: "Add katas solved on ${{ env.TODAY }}"
-          add: example-screenshot.png
-          push: --force --set-upstream origin ${{ github.ref_name }}
+          add: recording.mp4
