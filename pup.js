@@ -52,18 +52,17 @@ const scrapKatas = async (katas) => {
 
       console.log("Typing email")
       await emailInput.type(process.env.CODEWARS_EMAIL)
+      console.log("Typed email")
+
       console.log("Typing password")
       await passwordInput.type(process.env.CODEWARS_PASSWORD)
+      console.log("Typed password")
     } else {
       throw new Error("Could not find email or password input fields")
     }
 
     console.log("Submitting the sign-in form...")
-    const form = await page.$("form")
-    await form.evaluate((form) => form.submit())
-
-    console.log("Waiting for navigation after sign-in...")
-    await page.waitForNavigation({ waitUntil: "networkidle2" })
+    await page.click('button.is-red[type="submit"]')
   } catch (err) {
     console.log("Error during the login process 💥", err)
     await browser.close()
