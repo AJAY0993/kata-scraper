@@ -42,7 +42,7 @@ const scrapKatas = async (katas) => {
 
     console.log("Waiting for email and password input fields...")
     await page.waitForSelector("#user_email", { visible: true, timeout: 60000 })
-    await page.waitForSelector("#user_password", {
+    await page.waitForSelector("input[name='password']", {
       visible: true,
       timeout: 60000
     })
