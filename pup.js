@@ -49,7 +49,10 @@ const scrapKatas = async (katas) => {
 
     if (emailInput && passwordInput) {
       console.log("Found email and password input fields")
+
+      console.log("Typing email")
       await emailInput.type(process.env.CODEWARS_EMAIL)
+      console.log("Typing password")
       await passwordInput.type(process.env.CODEWARS_PASSWORD)
     } else {
       throw new Error("Could not find email or password input fields")
