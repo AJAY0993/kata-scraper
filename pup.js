@@ -42,7 +42,7 @@ const scrapKatas = async (katas) => {
 
     console.log("Waiting for email and password input fields...")
     await page.waitForSelector("#user_email", { visible: true, timeout: 60000 })
-    await page.waitForSelector("input[name='password']", {
+    await page.waitForSelector("#user_password", {
       visible: true,
       timeout: 60000
     })
@@ -57,7 +57,7 @@ const scrapKatas = async (katas) => {
     await page.screenshot({ path: "example-screenshot.png" })
 
     console.log("Typing password")
-    await page.type("#user_password", process.env.CODEWARS_PASSWORD)
+    await page.type("input[name='password']", process.env.CODEWARS_PASSWORD)
     console.log("Typed password")
 
     console.log("Submitting the sign-in form...")
