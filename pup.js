@@ -48,6 +48,8 @@ const scrapKatas = async (katas) => {
     await page.type("#user_email", process.env.CODEWARS_EMAIL)
     console.log("Typed email")
 
+    await page.screenshot({ path: "example-screenshot.png" })
+
     console.log("Typing password")
     await page.type("#user_password", process.env.CODEWARS_PASSWORD)
     console.log("Typed password")
@@ -63,75 +65,75 @@ const scrapKatas = async (katas) => {
   let retryCount = 0
   let waitTime = 1000
 
-  while (retryCount < maxRetries) {
-    for (let index in katas) {
-      try {
-        const kata = katas[index]
-        const language = kata["completedLanguages"][0]
-        const extension = extensions[language]
+  // while (retryCount < maxRetries) {
+  //   for (let index in katas) {
+  //     try {
+  //       const kata = katas[index]
+  //       const language = kata["completedLanguages"][0]
+  //       const extension = extensions[language]
 
-        console.log("Navigating to kata solution page...")
-        await page.goto(
-          `https://www.codewars.com/kata/${kata.id}/solutions/${language}/me/newest`,
-          {
-            waitUntil: "networkidle2"
-          }
-        )
+  //       console.log("Navigating to kata solution page...")
+  //       await page.goto(
+  //         `https://www.codewars.com/kata/${kata.id}/solutions/${language}/me/newest`,
+  //         {
+  //           waitUntil: "networkidle2"
+  //         }
+  //       )
 
-        const rank = await page.evaluate(() => {
-          const rankElement = document.querySelector(".is-white-rank")
-          if (rankElement) {
-            return rankElement.textContent
-          }
-          return null
-        })
+  //       const rank = await page.evaluate(() => {
+  //         const rankElement = document.querySelector(".is-white-rank")
+  //         if (rankElement) {
+  //           return rankElement.textContent
+  //         }
+  //         return null
+  //       })
 
-        if (rank) {
-          const codeText = await page.evaluate(() => {
-            const solutionsList = document.getElementById("solutions_list")
-            if (solutionsList) {
-              const solutionItem = solutionsList.querySelector("div")
-              if (solutionItem) {
-                const preTag = solutionItem.querySelector("pre")
-                if (preTag) {
-                  return preTag.textContent
-                }
-              }
-            }
-            return "//null"
-          })
+  //       if (rank) {
+  //         const codeText = await page.evaluate(() => {
+  //           const solutionsList = document.getElementById("solutions_list")
+  //           if (solutionsList) {
+  //             const solutionItem = solutionsList.querySelector("div")
+  //             if (solutionItem) {
+  //               const preTag = solutionItem.querySelector("pre")
+  //               if (preTag) {
+  //                 return preTag.textContent
+  //               }
+  //             }
+  //           }
+  //           return "//null"
+  //         })
 
-          const dirPath = path.join(
-            `${__dirname}/katas/${
-              difficultyToDirMap[rank]
-            }/${sanitizeFolderName(kata.slug)}`
-          )
-          const filePath = path.join(dirPath, `solution.${extension}`)
+  //         const dirPath = path.join(
+  //           `${__dirname}/katas/${
+  //             difficultyToDirMap[rank]
+  //           }/${sanitizeFolderName(kata.slug)}`
+  //         )
+  //         const filePath = path.join(dirPath, `solution.${extension}`)
 
-          // Ensure directory exists before writing
-          if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true })
-          }
+  //         // Ensure directory exists before writing
+  //         if (!fs.existsSync(dirPath)) {
+  //           fs.mkdirSync(dirPath, { recursive: true })
+  //         }
 
-          fs.writeFile(filePath, codeText, "utf-8", (err) => {
-            if (err) console.log("Error writing file 💥", err)
-            else console.log("File saved successfully", kata.slug, rank)
-          })
-        }
-      } catch (error) {
-        console.log(
-          "Error processing kata 💥",
-          error,
-          `\n Retrying in ${waitTime}ms`
-        )
-        await new Promise((resolve) => setTimeout(resolve, waitTime))
-        waitTime *= 2
-        retryCount++
-      }
-    }
+  //         fs.writeFile(filePath, codeText, "utf-8", (err) => {
+  //           if (err) console.log("Error writing file 💥", err)
+  //           else console.log("File saved successfully", kata.slug, rank)
+  //         })
+  //       }
+  //     } catch (error) {
+  //       console.log(
+  //         "Error processing kata 💥",
+  //         error,
+  //         `\n Retrying in ${waitTime}ms`
+  //       )
+  //       await new Promise((resolve) => setTimeout(resolve, waitTime))
+  //       waitTime *= 2
+  //       retryCount++
+  //     }
+  //   }
 
-    break
-  }
+  //   break
+  // }
 
   console.log("Closing the browser...")
   await browser.close()
