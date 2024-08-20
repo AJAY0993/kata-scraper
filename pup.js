@@ -41,27 +41,16 @@ const scrapKatas = async (katas) => {
       timeout: 60000
     })
 
-    const emailInput = await page.$("#user_email")
-    const passwordInput = await page.$("#user_password")
-
     console.log("Email:", process.env.CODEWARS_EMAIL ? "Set" : "Not Set")
     console.log("Password:", process.env.CODEWARS_PASSWORD ? "Set" : "Not Set")
 
-    if (emailInput && passwordInput) {
-      console.log("Found email and password input fields")
+    console.log("Typing email")
+    await page.type("#user_email", process.env.CODEWARS_EMAIL)
+    console.log("Typed email")
 
-      console.log("Typing email")
-      await emailInput.type(process.env.CODEWARS_EMAIL)
-      console.log("Typed email")
-
-      await page.waitForSelector("#user_password")
-
-      console.log("Typing password")
-      await passwordInput.type(process.env.CODEWARS_PASSWORD)
-      console.log("Typed password")
-    } else {
-      throw new Error("Could not find email or password input fields")
-    }
+    console.log("Typing password")
+    await page.type("#user_password", process.env.CODEWARS_PASSWORD)
+    console.log("Typed password")
 
     console.log("Submitting the sign-in form...")
     await page.click('button.is-red[type="submit"]')
