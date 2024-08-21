@@ -18,7 +18,7 @@ const concurrencyLimit = 4
 async function main() {
   try {
     await deleteDirectory("./katas")
-    const katas = (await fetchKatas()).slice(0, 1)
+    const katas = await fetchKatas()
     await fetchKataDetails(katas)
     console.log("All kata details fetched.")
     await scrapeKatasSolution(katas)
@@ -76,17 +76,17 @@ async function fetchKatas(startPage = 0) {
   const pagedata_array = [response_body.data]
   const katas = pagedata_array
 
-  // for (
-  //   let currentPage = startPage + 1;
-  //   currentPage < totalPages;
-  //   currentPage++
-  // ) {
-  //   const { data } = await fetch_CompletedKatas_Page(currentPage)
-  //   if (!data || !totalPages) {
-  //     throw `Couldn't fetch katas. { data: ${data}, currentPage:${currentPage} }`
-  //   }
-  //   katas.push(data)
-  // }
+  for (
+    let currentPage = startPage + 1;
+    currentPage < totalPages;
+    currentPage++
+  ) {
+    const { data } = await fetch_CompletedKatas_Page(currentPage)
+    if (!data || !totalPages) {
+      throw `Couldn't fetch katas. { data: ${data}, currentPage:${currentPage} }`
+    }
+    katas.push(data)
+  }
 
   const kata = katas.flat()
   const filepath = "./katas/katas.json"
