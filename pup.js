@@ -10,6 +10,8 @@ const {
   sanitizeFolderName,
   createDirectory
 } = require("./utils.js")
+const maxRetries = 0
+const concurrencyLimit = 1
 
 async function scrapeKatasSolution(/** @type {string | any[]} */ katas) {
   console.log("scrapeKatasSolution")
@@ -44,7 +46,8 @@ async function scrapeKatasSolution(/** @type {string | any[]} */ katas) {
     await page.goto("https://www.codewars.com/users/sign_in", {
       waitUntil: "networkidle2"
     })
-
+    console.log("Setting viewport size...")
+    await page.setViewport({ width: 1080, height: 1024 })
     console.log("Waiting for email and password input fields...")
     await page.waitForSelector("#user_email", { visible: true, timeout: 60000 })
     await page.waitForSelector("#user_password", {
@@ -59,7 +62,6 @@ async function scrapeKatasSolution(/** @type {string | any[]} */ katas) {
       process.env.CODEWARS_EMAIL ?? "CODEWARS_EMAIL is null"
     )
     console.log("Typed email")
-
     console.log("Typing password")
     await page.type(
       "#user_password",
@@ -79,7 +81,6 @@ async function scrapeKatasSolution(/** @type {string | any[]} */ katas) {
   /**
    * @param {{ [x: string]: any[]; id: any; slug: any; }} kata
    */
-
   async function scrapeWithRetry(kata, retryCount = 0) {
     console.log("scrapeWithRetry")
     console.log()
@@ -103,7 +104,7 @@ async function scrapeKatasSolution(/** @type {string | any[]} */ katas) {
             return rank.textContent
           }
         }
-        return null
+        return "rank not found"
       })
 
       if (rank) {
@@ -126,6 +127,7 @@ async function scrapeKatasSolution(/** @type {string | any[]} */ katas) {
         await node_fs.promises.writeFile(filePath, codeText, "utf-8")
       }
     } catch (err) {
+      // retry logic deleted
       console.error(err)
     }
   }
