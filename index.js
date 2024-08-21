@@ -2,7 +2,7 @@ const fs = require("node:fs/promises")
 const path = require("node:path")
 const axios = require("axios")
 const { difficultyToDirMap, sanitizeFolderName } = require("./utils.js")
-const scrapKatas = require("./pup.js")
+const scrapKatasSolution = require("./pup.js")
 
 const BASE_URL = `https://www.codewars.com/api/v1/users/${process.env.CODEWARS_USERNAME}/code-challenges/completed`
 const KATA_DETAIL_URL = `https://www.codewars.com/api/v1/code-challenges/`
@@ -15,10 +15,10 @@ const concurrencyLimit = 5
 async function main() {
   try {
     await fetchKatas()
-    // await fetchKataDetails()
+    await fetchKataDetails()
     console.log("All kata details fetched.")
     console.log("Starting scraping solutions")
-    await scrapKatas(katas)
+    await scrapKatasSolution(katas)
   } catch (error) {
     console.log(error)
     await fs.writeFile(

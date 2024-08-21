@@ -9,9 +9,10 @@ const {
   extensions,
   sanitizeFolderName
 } = require("./utils.js")
-const maxRetries = 10000
+const maxRetries = 100
+const concurrencyLimit = 5
 
-const scrapKatas = async (katas) => {
+const scrapKatasSolution = async (katas) => {
   console.log("Starting the scraping process...")
 
   try {
@@ -21,11 +22,27 @@ const scrapKatas = async (katas) => {
     })
   } catch (err) {
     console.log("Error during browser launch 💥", err)
-    return // Exit if browser launch fails
+    return
   }
 
   console.log("Browser launched successfully.")
   const page = await browser.newPage()
+
+  page.on("console", (msg) => {
+    console.log(`BROWSER LOG: ${msg.text()}`)
+  })
+
+  page.on("pageerror", (err) => {
+    console.log(`BROWSER ERROR: ${err.toString()}`)
+  })
+
+  page.on("requestfailed", (request) => {
+    console.log(
+      `BROWSER REQUEST FAILED: ${request.url()} - ${
+        request.failure().errorText
+      }`
+    )
+  })
 
   const recorder = new PuppeteerScreenRecorder(page)
 
@@ -57,7 +74,7 @@ const scrapKatas = async (katas) => {
     await page.screenshot({ path: "example-screenshot.png" })
 
     console.log("Typing password")
-    await page.type("input[name='password']", process.env.CODEWARS_PASSWORD)
+    await page.type("#user_password", process.env.CODEWARS_PASSWORD)
     console.log("Typed password")
 
     console.log("Submitting the sign-in form...")
@@ -68,84 +85,82 @@ const scrapKatas = async (katas) => {
     return // Exit if login fails
   }
 
+  async function scrapWithRetry(kata, retryCount = 0) {
+    try {
+      const language = kata["completedLanguages"][0]
+      const extension = extensions[language]
+
+      console.log("Navigating to kata solution page...")
+      await page.goto(
+        `https://www.codewars.com/kata/${kata.id}/solutions/${language}/me/newest`,
+        {
+          waitUntil: "networkidle2"
+        }
+      )
+
+      const rank = await page.evaluate(() => {
+        const rankElement = document.querySelector(".is-white-rank")
+        if (rankElement) {
+          return rankElement.textContent
+        }
+        return null
+      })
+
+      if (rank) {
+        const codeText = await page.evaluate(() => {
+          const solutionsList = document.getElementById("solutions_list")
+          if (solutionsList) {
+            const solutionItem = solutionsList.querySelector("div")
+            if (solutionItem) {
+              const preTag = solutionItem.querySelector("pre")
+              if (preTag) {
+                return preTag.textContent
+              }
+            }
+          }
+          return "//null"
+        })
+
+        const dirPath = path.join(
+          `${__dirname}/katas/${difficultyToDirMap[rank]}/${sanitizeFolderName(
+            kata.slug
+          )}`
+        )
+        const filePath = path.join(dirPath, `solution.${extension}`)
+
+        // Ensure directory exists before writing
+        if (!fs.existsSync(dirPath)) {
+          await fs.promises.mkdir(dirPath, { recursive: true })
+        }
+
+        await fs.promises.writeFile(filePath, codeText, "utf-8")
+      }
+    } catch (error) {
+      const isRateLimitError =
+        error.message.includes("429") || error.message.includes("rate limit")
+
+      if (isRateLimitError && retryCount < maxRetries) {
+        const waitTime = Math.pow(2, retryCount) * 1000
+        console.error(`Error fetching kata ${kata.id}:`, error.message)
+        console.log(`Retrying in ${waitTime}ms...`)
+        await new Promise((resolve) => setTimeout(resolve, waitTime))
+        await scrapWithRetry(kata, retryCount + 1)
+      } else {
+        console.error(`Max retries reached for kata ${kata.id}:`, error.message)
+        throw error
+      }
+    }
+  }
+
+  for (let i = 0; i < katas.length; i++) {
+    await scrapWithRetry(katas[i])
+  }
+
   await recorder.stop()
-
-  let retryCount = 0
-  let waitTime = 1000
-
-  // while (retryCount < maxRetries) {
-  //   for (let index in katas) {
-  //     try {
-  //       const kata = katas[index]
-  //       const language = kata["completedLanguages"][0]
-  //       const extension = extensions[language]
-
-  //       console.log("Navigating to kata solution page...")
-  //       await page.goto(
-  //         `https://www.codewars.com/kata/${kata.id}/solutions/${language}/me/newest`,
-  //         {
-  //           waitUntil: "networkidle2"
-  //         }
-  //       )
-
-  //       const rank = await page.evaluate(() => {
-  //         const rankElement = document.querySelector(".is-white-rank")
-  //         if (rankElement) {
-  //           return rankElement.textContent
-  //         }
-  //         return null
-  //       })
-
-  //       if (rank) {
-  //         const codeText = await page.evaluate(() => {
-  //           const solutionsList = document.getElementById("solutions_list")
-  //           if (solutionsList) {
-  //             const solutionItem = solutionsList.querySelector("div")
-  //             if (solutionItem) {
-  //               const preTag = solutionItem.querySelector("pre")
-  //               if (preTag) {
-  //                 return preTag.textContent
-  //               }
-  //             }
-  //           }
-  //           return "//null"
-  //         })
-
-  //         const dirPath = path.join(
-  //           `${__dirname}/katas/${
-  //             difficultyToDirMap[rank]
-  //           }/${sanitizeFolderName(kata.slug)}`
-  //         )
-  //         const filePath = path.join(dirPath, `solution.${extension}`)
-
-  //         // Ensure directory exists before writing
-  //         if (!fs.existsSync(dirPath)) {
-  //           fs.mkdirSync(dirPath, { recursive: true })
-  //         }
-
-  //         fs.writeFile(filePath, codeText, "utf-8", (err) => {
-  //           if (err) console.log("Error writing file 💥", err)
-  //           else console.log("File saved successfully", kata.slug, rank)
-  //         })
-  //       }
-  //     } catch (error) {
-  //       console.log(
-  //         "Error processing kata 💥",
-  //         error,
-  //         `\n Retrying in ${waitTime}ms`
-  //       )
-  //       await new Promise((resolve) => setTimeout(resolve, waitTime))
-  //       waitTime *= 2
-  //       retryCount++
-  //     }
-  //   }
-
-  //   break
-  // }
 
   console.log("Closing the browser...")
   await browser.close()
   console.log("Scraping process completed.")
 }
 
-module.exports = scrapKatas
+module.exports = scrapKatasSolution
