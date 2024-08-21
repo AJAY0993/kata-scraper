@@ -126,7 +126,7 @@ async function fetchKataDetails(katas) {
 
   async function fetchInBatches(batch) {
     console.log("\nfetchInBatches")
-    await Promise.all(batch.map((kata) => fetchWithRetry(kata.id)))
+    // await Promise.all(batch.map((kata) => fetchWithRetry(kata.id)))
     for (const { id } of batch) {
       await fetchWithRetry(id)
     }
