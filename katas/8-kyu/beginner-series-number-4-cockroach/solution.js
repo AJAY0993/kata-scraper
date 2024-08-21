@@ -1,4 +1,1 @@
-function cockroachSpeed(s) {
-  //Good Luck!
-  return Math.floor(s * 500 /18);
-}
+codeblock not found

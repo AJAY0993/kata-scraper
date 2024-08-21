@@ -1,4 +1,1 @@
-function spacify(str) {
-  // return 
- return [...str].join(' ');
-}
+codeblock not found

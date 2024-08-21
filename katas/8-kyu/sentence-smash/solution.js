@@ -1,5 +1,1 @@
-function smash (words) {
-   
-  return words.join(" ");
-  
-};
+codeblock not found

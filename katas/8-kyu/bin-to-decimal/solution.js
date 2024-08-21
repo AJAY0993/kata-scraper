@@ -1,4 +1,1 @@
-function binToDec(bin){
-  // ...
- return +parseInt(bin, 2);
-}
+codeblock not found

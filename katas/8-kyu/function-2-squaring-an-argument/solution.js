@@ -1,4 +1,1 @@
-// Write the "square"-function here
-function square(n){
-  return n**2
-}
+codeblock not found

@@ -1,3 +1,1 @@
-const binaryArrayToNumber = arr => {
-  return parseInt(+arr.join(''),2);
-};
+codeblock not found

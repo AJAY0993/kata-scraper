@@ -1,3 +1,1 @@
-function repeatStr (n, s) {
-  return s.repeat(n);
-}
+codeblock not found

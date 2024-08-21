@@ -1,3 +1,1 @@
-function maxDiff(list) {
-  return list.length<1? 0: Math.max(...list)-Math.min(...list);
-};
+codeblock not found

@@ -1,4 +1,1 @@
-function hero(bullets, dragons){
-//Get Coding!
-return bullets >= dragons * 2
-}
+codeblock not found

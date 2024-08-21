@@ -1,5 +1,1 @@
-function formatMoney(amount){
-  // your formatting code here
-  
-  return '$' + amount.toFixed(2);
-}
+codeblock not found

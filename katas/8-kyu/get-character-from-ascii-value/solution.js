@@ -1,4 +1,1 @@
-function getChar(c){
-  // ...
-   return String.fromCharCode(c);
-}
+codeblock not found

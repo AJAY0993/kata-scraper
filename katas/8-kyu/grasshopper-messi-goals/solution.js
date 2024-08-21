@@ -1,5 +1,1 @@
-var laLigaGoals = 43;
-var championsLeagueGoals = 10;
-var copaDelReyGoals = 5;
-
-var totalGoals = copaDelReyGoals + championsLeagueGoals + laLigaGoals;
+codeblock not found

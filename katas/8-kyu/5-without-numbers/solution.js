@@ -1,3 +1,1 @@
-function unusualFive() {
-  return 'asdfg'.length;
-}
+codeblock not found

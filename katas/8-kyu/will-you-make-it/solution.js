@@ -1,4 +1,1 @@
-const zeroFuel = (distanceToPump, mpg, fuelLeft) => {
-    // TODO
-    return mpg * fuelLeft >= distanceToPump ? true : false;
-};
+codeblock not found

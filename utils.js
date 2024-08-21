@@ -1,3 +1,6 @@
+const fs = require("node:fs")
+const node_path = require("node:path")
+
 const difficultyToDirMap = {
   "1 kyu": "1-kyu",
   "2 kyu": "2-kyu",
@@ -64,12 +67,46 @@ const extensions = {
   vb: "vb"
 }
 
+/**
+ * @param {string} name
+ */
 function sanitizeFolderName(name) {
   // Define a regex pattern to match invalid characters
   const invalidChars = /[<>:"/\\|?*]+/g
-
   // Replace invalid characters with an underscore
   return name.replace(invalidChars, "_")
 }
 
-module.exports = { extensions, difficultyToDirMap, sanitizeFolderName }
+/**
+ * @param {string} path
+ * @param {boolean} [isFile=false]
+ */
+async function createDirectory(path, isFile = false) {
+  if (isFile === true) {
+    await fs.promises.mkdir(node_path.dirname(path), { recursive: true })
+  } else {
+    await fs.promises.mkdir(path, { recursive: true })
+  }
+}
+/**
+ * @param {string} path
+ */
+async function deleteDirectory(path) {
+  await fs.promises.rm(path, { recursive: true, force: true })
+}
+
+/**
+ * @param {string} path
+ */
+async function readFile(path) {
+  return await fs.promises.readFile(path, { encoding: "utf8" })
+}
+
+module.exports = {
+  extensions,
+  difficultyToDirMap,
+  sanitizeFolderName,
+  createDirectory,
+  deleteDirectory,
+  readFile
+}

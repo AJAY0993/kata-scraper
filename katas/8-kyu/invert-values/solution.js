@@ -1,3 +1,1 @@
-function invert(array) {
-   return array.map(x => x * (-1));
-}
+codeblock not found

@@ -1,1 +1,1 @@
-function maps(x){return x.map(x=>x*2)};
+codeblock not found
