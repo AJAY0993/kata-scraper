@@ -8,16 +8,21 @@ const {
   difficultyToDirMap,
   extensions,
   sanitizeFolderName,
-  createDirectory
+  createDirectory,
+  getSolution,
+  storeSolution
 } = require("./utils.js")
 const maxRetries = 0
 const concurrencyLimit = 1
 
-async function scrapeKatasSolution(/** @type {string | any[]} */ katas) {
+async function scrapeKatasSolution(
+  /** @type {string | any[]} */ katas,
+  /** @type {{ [key: string]: string } | {}} */ ranks
+) {
   console.log("scrapeKatasSolution")
   try {
     browser = await puppeteer.launch({
-      headless: true,
+      headless: process.env.NODE_ENV !== "development",
       timeout: 10000
     })
   } catch (err) {
@@ -87,44 +92,54 @@ async function scrapeKatasSolution(/** @type {string | any[]} */ katas) {
     console.log({ kata })
     console.log()
     try {
-      const language = kata["completedLanguages"][0]
-      const extension = extensions[language]
-      console.log("Navigating to kata solution page...")
-      await page.goto(
-        `https://www.codewars.com/kata/${kata.id}/solutions/${language}/me/newest`,
-        {
-          waitUntil: "networkidle2"
-        }
-      )
-
-      const rank = await page.evaluate(() => {
-        const ranks = document.querySelectorAll(".is-white-rank")
-        for (const rank of ranks) {
-          if (rank.textContent) {
-            return rank.textContent
-          }
-        }
-        return "rank not found"
-      })
-
-      if (rank) {
-        const codeText = await page.evaluate(() => {
-          const codeblocks = document.querySelectorAll(
-            "#solutions_list div pre"
-          )
-          for (const codeblock of codeblocks) {
-            if (codeblock.textContent) {
-              return codeblock.textContent
+      for (const language of kata["completedLanguages"]) {
+        const extension = extensions[language]
+        console.log("Navigating to kata solution page...")
+        let solution = await getSolution(kata.id, extension)
+        if (solution) console.log("Solution found in cache")
+        else if (!solution) {
+          await page.goto(
+            `https://www.codewars.com/kata/${kata.id}/solutions/${language}/me/newest`,
+            {
+              waitUntil: "networkidle2"
             }
+          )
+
+          // @ts-ignore
+          const rank = ranks[kata.id]
+
+          solution = await page.evaluate(() => {
+            const codeblocks = document.querySelectorAll(
+              "#solutions_list div pre"
+            )
+            for (const codeblock of codeblocks) {
+              if (codeblock.textContent) {
+                return codeblock.textContent
+              }
+            }
+            return "// codeblock not found"
+          })
+
+          try {
+            console.log()
+            console.log("Storing solution in redis")
+            console.log()
+            if (solution !== "// codeblock not found") {
+              await storeSolution(kata.id, language, solution)
+            }
+          } catch (error) {
+            console.log("Something went wrong while saving solution.")
           }
-          return "codeblock not found"
-        })
+        }
+
+        // @ts-ignore
+        const rank = ranks[kata.id]
         const rankdir = difficultyToDirMap[rank]
         const filePath = `./katas/${rankdir}/${sanitizeFolderName(
           kata.slug
         )}/solution.${extension}`
         await createDirectory(filePath, true)
-        await node_fs.promises.writeFile(filePath, codeText, "utf-8")
+        await node_fs.promises.writeFile(filePath, solution, "utf-8")
       }
     } catch (err) {
       // retry logic deleted
@@ -132,6 +147,7 @@ async function scrapeKatasSolution(/** @type {string | any[]} */ katas) {
     }
   }
 
+  await new Promise((res) => setTimeout(res, 1000))
   for (let i = 0; i < katas.length; i++) {
     await scrapeWithRetry(katas[i])
   }

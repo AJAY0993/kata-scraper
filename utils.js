@@ -1,6 +1,9 @@
 const fs = require("node:fs")
 const node_path = require("node:path")
-
+const redis = require("./redis")
+/**
+ * @type {{ [key: string]: string }}
+ */
 const difficultyToDirMap = {
   "1 kyu": "1-kyu",
   "2 kyu": "2-kyu",
@@ -11,6 +14,10 @@ const difficultyToDirMap = {
   "7 kyu": "7-kyu",
   "8 kyu": "8-kyu"
 }
+
+/**
+ * @type {{ [key: string]: string }}
+ */
 
 const extensions = {
   agda: "agda",
@@ -102,11 +109,34 @@ async function readFile(path) {
   return await fs.promises.readFile(path, { encoding: "utf8" })
 }
 
+/**
+ * @param {string} problemID
+ * @param {string} languageCode
+ * @param {string} solutionData
+ */
+
+const storeSolution = async (problemID, languageCode, solutionData) => {
+  const key = `${problemID}:${languageCode}`
+  await redis.set(key, JSON.stringify(solutionData))
+}
+
+/**
+ * @param {string} problemID
+ * @param {string} languageCode
+ */
+const getSolution = async (problemID, languageCode) => {
+  const key = `${problemID}:${languageCode}`
+  const data = await redis.get(key)
+  return data ? JSON.parse(data) : null
+}
+
 module.exports = {
   extensions,
   difficultyToDirMap,
   sanitizeFolderName,
   createDirectory,
   deleteDirectory,
-  readFile
+  readFile,
+  storeSolution,
+  getSolution
 }

@@ -15,13 +15,15 @@ const KATA_DETAIL_URL = `https://www.codewars.com/api/v1/code-challenges/`
 const maxRetries = 0
 const concurrencyLimit = 4
 
+const ranks = {}
+
 async function main() {
   try {
     await deleteDirectory("./katas")
     const katas = await fetchKatas()
     await fetchKataDetails(katas)
     console.log("All kata details fetched.")
-    await scrapeKatasSolution(katas)
+    await scrapeKatasSolution(katas, ranks)
 
     const entries = await fs.promises.readdir("./katas", {
       encoding: "utf8",
@@ -105,14 +107,17 @@ async function fetchKataDetails(katas) {
    * @param {number} [retryCount=0]
    */
   async function fetchWithRetry(id, retryCount = 0) {
-    console.log("fetchWithRetry")
+    console.log("fetchWithRetry", id)
     try {
       const response = await fetch(`${KATA_DETAIL_URL}${id}`)
       const response_body = await response.json()
+      // @ts-ignore
+      ranks[response_body.id] = response_body.rank.name
       const rankdir = difficultyToDirMap[response_body.rank.name]
       const filepath = `./katas/${rankdir}/${sanitizeFolderName(
         response_body.slug
       )}/README.md`
+
       await createDirectory(filepath, true)
       await fs.promises.writeFile(filepath, response_body.description)
     } catch (err) {
@@ -125,7 +130,7 @@ async function fetchKataDetails(katas) {
    */
 
   async function fetchInBatches(batch) {
-    console.log("\nfetchInBatches")
+    console.log("\n ----- fetching in batches ---- ")
     // await Promise.all(batch.map((kata) => fetchWithRetry(kata.id)))
     for (const { id } of batch) {
       await fetchWithRetry(id)
