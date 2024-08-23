@@ -117,7 +117,7 @@ async function readFile(path) {
 
 const storeSolution = async (problemID, languageCode, solutionData) => {
   const key = `${problemID}:${languageCode}`
-  await redis.set(key, JSON.stringify(solutionData))
+  await redis.set(key, solutionData)
 }
 
 /**
@@ -127,7 +127,7 @@ const storeSolution = async (problemID, languageCode, solutionData) => {
 const getSolution = async (problemID, languageCode) => {
   const key = `${problemID}:${languageCode}`
   const data = await redis.get(key)
-  return data ? JSON.parse(data) : null
+  return data
 }
 
 module.exports = {
