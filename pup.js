@@ -114,7 +114,10 @@ async function scrapeKatasSolution(
             )
             for (const codeblock of codeblocks) {
               if (codeblock.textContent) {
+                console.log("Solution found")
                 return codeblock.textContent
+              } else {
+                console.log("Solution not found")
               }
             }
             return "// codeblock not found"

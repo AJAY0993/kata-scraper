@@ -19,9 +19,12 @@ const concurrencyLimit = 4
 const ranks = {}
 
 async function main() {
+  process.env.REDIS_URL
+    ? console.log("REDIS URL FOUND")
+    : console.log("REDIS URL NOT FOUND")
   try {
     await deleteDirectory("./katas")
-    const katas = await fetchKatas()
+    const katas = (await fetchKatas()).slice(0, 3)
     await fetchKataDetails(katas)
     console.log("All kata details fetched.")
     await scrapeKatasSolution(katas, ranks)
@@ -42,6 +45,7 @@ async function main() {
         console.log()
       }
     }
+    redis.disconnect()
   } catch (err) {
     console.error(err)
     await fs.promises.writeFile(
