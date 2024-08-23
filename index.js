@@ -1,5 +1,6 @@
 const fs = require("node:fs")
 const path = require("node:path")
+const redis = require("./redis")
 
 const {
   difficultyToDirMap,
@@ -142,4 +143,4 @@ async function fetchKataDetails(katas) {
   }
 }
 
-main()
+redis.on("connect", main)
