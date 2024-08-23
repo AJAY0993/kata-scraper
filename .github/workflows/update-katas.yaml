@@ -25,6 +25,7 @@ jobs:
           CODEWARS_USERNAME: ${{ secrets.CODEWARS_USERNAME }}
           CODEWARS_EMAIL: ${{ secrets.CODEWARS_EMAIL }}
           CODEWARS_PASSWORD: ${{ secrets.CODEWARS_PASSWORD }}
+          REDIS_URL: ${{ secrets.REDIS_URL }}
         run: node index.js
 
       - name: Set Today's Date
