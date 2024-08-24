@@ -136,10 +136,10 @@ async function fetchKataDetails(katas) {
 
   async function fetchInBatches(batch) {
     console.log("\n ----- fetching in batches ---- ")
-    await Promise.all(batch.map((kata) => fetchWithRetry(kata.id)))
-    // for (const { id } of batch) {
-    //   await fetchWithRetry(id)
-    // }
+    // await Promise.all(batch.map((kata) => fetchWithRetry(kata.id)))
+    for (const { id } of batch) {
+      await fetchWithRetry(id)
+    }
   }
 
   for (let i = 0; i < katas.length; i += concurrencyLimit) {

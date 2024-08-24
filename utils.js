@@ -110,6 +110,34 @@ async function readFile(path) {
 }
 
 /**
+ * @param {any} page
+ * @param {any} browser
+ */
+async function checkHeaderForButtons(page, browser) {
+  const exist = await page.evaluate(() => {
+    const header = document.querySelector("header.main.is-visible#main_header")
+
+    if (!header) {
+      return null
+    }
+
+    const loginButtonExists = header.querySelector('a[href="/users/sign_in"]')
+    const signUpButtonExists = header.querySelector('a[href="/join"]')
+
+    if (!loginButtonExists || !signUpButtonExists) {
+      return null
+    }
+  })
+  if (Boolean(exist) === false) {
+    console.log(
+      "Could not login closing the process. Please try again after some time"
+    )
+    await browser.close()
+    process.exit(1)
+  }
+}
+
+/**
  * @param {string} problemID
  * @param {string} languageCode
  * @param {string} solutionData
@@ -148,6 +176,7 @@ module.exports = {
   createDirectory,
   deleteDirectory,
   readFile,
+  checkHeaderForButtons,
   storeSolution,
   getSolution
 }

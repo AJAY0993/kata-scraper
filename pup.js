@@ -10,7 +10,8 @@ const {
   sanitizeFolderName,
   createDirectory,
   getSolution,
-  storeSolution
+  storeSolution,
+  checkHeaderForButtons
 } = require("./utils.js")
 const maxRetries = 0
 const concurrencyLimit = 1
@@ -80,7 +81,7 @@ async function scrapeKatasSolution(
   } catch (err) {
     console.log("Error during the login process 💥", err)
     await browser.close()
-    return // Exit if login fails
+    process.exit(1) // Exit if login fails
   }
 
   /**
@@ -139,6 +140,8 @@ async function scrapeKatasSolution(
   }
 
   await new Promise((res) => setTimeout(res, 1000))
+
+  await checkHeaderForButtons(page, browser)
   for (let i = 0; i < katas.length; i++) {
     await scrapeWithRetry(katas[i])
   }
