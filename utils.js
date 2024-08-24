@@ -116,8 +116,19 @@ async function readFile(path) {
  */
 
 const storeSolution = async (problemID, languageCode, solutionData) => {
-  const key = `${problemID}:${languageCode}`
-  await redis.set(key, solutionData)
+  try {
+    console.log()
+    solutionData === "// codeblock not found"
+      ? console.log("Solution not found so will not save in redis")
+      : console.log("Storing solution in redis")
+    console.log()
+    if (solutionData !== "// codeblock not found") {
+      const key = `${problemID}:${languageCode}`
+      await redis.set(key, solutionData)
+    }
+  } catch (error) {
+    console.log("Something went wrong while saving solution.")
+  }
 }
 
 /**

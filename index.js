@@ -81,7 +81,7 @@ async function fetchKatas(startPage = 0) {
   const response_body = await fetch_CompletedKatas_Page(startPage)
   const totalPages = response_body.totalPages
   const pagedata_array = [response_body.data]
-  const katas = pagedata_array
+  let katas = pagedata_array
 
   for (
     let currentPage = startPage + 1;
@@ -95,11 +95,11 @@ async function fetchKatas(startPage = 0) {
     katas.push(data)
   }
 
-  const kata = katas.flat()
+  katas = katas.flat()
   const filepath = "./katas/katas.json"
   await createDirectory(filepath, true)
-  await fs.promises.writeFile(filepath, JSON.stringify(kata))
-  return kata
+  await fs.promises.writeFile(filepath, JSON.stringify(katas))
+  return katas
 }
 
 /**

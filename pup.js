@@ -114,25 +114,13 @@ async function scrapeKatasSolution(
             )
             for (const codeblock of codeblocks) {
               if (codeblock.textContent) {
-                console.log("Solution found")
                 return codeblock.textContent
-              } else {
-                console.log("Solution not found")
               }
             }
             return "// codeblock not found"
           })
 
-          try {
-            console.log()
-            console.log("Storing solution in redis")
-            console.log()
-            if (solution !== "// codeblock not found") {
-              await storeSolution(kata.id, extension, solution)
-            }
-          } catch (error) {
-            console.log("Something went wrong while saving solution.")
-          }
+          await storeSolution(kata.id, extension, solution)
         }
 
         // @ts-ignore
