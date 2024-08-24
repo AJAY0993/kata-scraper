@@ -116,21 +116,18 @@ async function readFile(path) {
 async function checkHeaderForButtons(page, browser) {
   const exist = await page.evaluate(() => {
     const header = document.querySelector("header.main.is-visible#main_header")
-
-    if (!header) {
-      return null
-    }
-
+    
     const loginButtonExists = header.querySelector('a[href="/users/sign_in"]')
     const signUpButtonExists = header.querySelector('a[href="/join"]')
 
-    if (!loginButtonExists || !signUpButtonExists) {
-      return null
+    if (loginButtonExists || signUpButtonExists) {
+      return true
     }
+    return false
   })
-  if (Boolean(exist) === false) {
+  if (exist) {
     console.log(
-      "Could not login closing the process. Please try again after some time"
+      "Could not login, closing the process. Please try again after some time"
     )
     await browser.close()
     process.exit(1)
