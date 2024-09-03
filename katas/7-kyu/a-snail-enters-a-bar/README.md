@@ -16,16 +16,16 @@ The question is: Will the snail be able to reach the right end of the rubber ban
    - Initial length of the rubber band: ```x = 10``` units
    - Speed of the snail: ```y = 2``` units/minute
    - Increase rate of the rubber band: ```z = 1``` unit/minute
-   - **Outcome:** ```true``` (The snail will reach the end in ```10``` minutes.)
+   - **Outcome:** ```True``` (The snail will reach the end in ```10``` minutes.)
 
 2. **Example 2:**
    - Initial length of the rubber band: ```x = 100``` units
    - Speed of the snail: ```y = 1``` unit/minute
    - Increase rate of the rubber band: ```z = 2``` units/minute
-   - **Outcome:** ```false``` (The snail will never reach the end.)
+   - **Outcome:** ```False``` (The snail will never reach the end.)
 
 3. **Example 3:**
    - Initial length of the rubber band: ```x = 100,000``` units
    - Speed of the snail: ```y = 0.1``` units/minute
    - Increase rate of the rubber band: ```z = 0.05``` units/minute
-   - **Outcome:** ```false``` (The snail will not be able to reach the end within one year.)
+   - **Outcome:** ```False``` (The snail will not be able to reach the end within one year.)
