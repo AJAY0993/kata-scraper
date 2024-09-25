@@ -1,20 +1,4 @@
-Program a function `sumAverage(arr)` where `arr` is an array containing arrays full of numbers, for example:
-
-```javascript
-sumAverage([[1, 2, 2, 1], [2, 2, 2, 1]]);
-```
-```python
-sum_average([[1, 2, 2, 1], [2, 2, 2, 1]]);
-```
-```ruby
-sum_average([[1, 2, 2, 1], [2, 2, 2, 1]]);
-```
-```php
-sumAverage([[1, 2, 2, 1], [2, 2, 2, 1]]);
-```
-```julia
-sumaverage([[1, 2, 2, 1], [2, 2, 2, 1]]);
-```
+Program a function `sumAverage(arr)` where `arr` is an array containing arrays full of numbers.
 
 First, determine the average of each array. Then, return the sum of all the averages.
 
@@ -33,20 +17,10 @@ The example given: `sumAverage([[3, 4, 1, 3, 5, 1, 4], [21, 54, 33, 21, 77]])`, 
 3 + 41.2 = 44.2
 ```
 3. Round the final average down:
-```javascript
-Math.floor(44.2) = 44
 ```
-```php
-floor(44.2) = 44
-```
-```julia
 floor(44.2) = 44
 ```
 
 ~~~if:julia
 In Julia, the `Statistics` package is preloaded.
 ~~~
-```python
-import math
-math.floor(44.2) = 44
-```
