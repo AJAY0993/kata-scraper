@@ -1,3 +1,11 @@
-Write a function ```insert_dash(num)``` / ```insertDash(num)``` / ```InsertDash(int num)``` that will insert dashes ('-') between each two odd digits in num. For example: if num is 454793 the output should be 4547-9-3. 
+Write a function that takes an integer `num` (`num >= 0`) and inserts dashes (`'-'`) between each two **odd** digits in `num`.
 
-Note that the number will always be non-negative (>= 0).
+## Examples
+
+```python
+454793 ---> "4547-9-3"
+     0 ---> "0"
+     1 ---> "1"
+13579  ---> "1-3-5-7-9"
+ 86420 ---> "86420"
+```
