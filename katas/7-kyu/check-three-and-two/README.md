@@ -1,4 +1,4 @@
-Given an array with exactly 5 strings `"a"`, `"b"` or `"c"` (`char`s in Java, `character`s in Fortran), check if the array contains three and two of the same values.
+Given an array with exactly 5 strings `"a"`, `"b"` or `"c"` (`char`s in Java, `character`s in Fortran, `Char`s in Haskell), check if the array contains three and two of the same values.
 
 ## Examples
 
