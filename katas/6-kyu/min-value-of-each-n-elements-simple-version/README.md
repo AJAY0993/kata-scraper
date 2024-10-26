@@ -1,12 +1,13 @@
 > When no more interesting kata can be resolved, I just choose to create the new kata, to solve their own, to enjoy the process  --myjinxin2015 said
 
 ## Description:
- Complete the function. Two arguments will be given:
+
+Complete the function. Two arguments will be given:
  
 - `arr`: An array that contains some integers (positve,negative or zero).
 - `n`: A positive integer. 1 <= n <= arr.length.
  
- Your task is to find the minimum value of each `n` adjacent elements in `arr`. Returns by a new array. For example:
+Your task is to find the minimum value of each `n` adjacent elements in `arr`. Returns by a new array. For example:
 
 ```
 arr = [1,2,3,10,-5], n = 2   ==>  [1,2,3,-5]
@@ -16,7 +17,6 @@ arr = [1,2,3,10,-5], n = 2   ==>  [1,2,3,-5]
 [..(3,10).]  --> 3
 [...(10,-5)] --> -5
 ```
-
 
 ## Some Examples
 
