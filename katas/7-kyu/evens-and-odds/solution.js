@@ -1,0 +1,1 @@
+const evensAndOdds = n => !(n % 2) ? n.toString(2) : n.toString(16);
