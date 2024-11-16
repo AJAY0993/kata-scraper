@@ -37,6 +37,9 @@ Here's how it will be tested:
 ```prolog
    greet:greet
 ```
+```groovy
+    Solution.main("parameter1", "parameter2", "parametern");
+```  
 
 Hints:
 
