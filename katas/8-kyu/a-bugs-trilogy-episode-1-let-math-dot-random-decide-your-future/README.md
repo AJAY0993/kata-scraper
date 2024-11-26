@@ -5,10 +5,12 @@ Therefore, Pac wants to apply for the worldwide famous -and very demanding-
 In order to join, Pac is required to solve a series of 3 exercises about 'Bug Fixes'.  
 He has been sent an email from the Academy with the following instructions,
 
-<pre><code>Dear Pac,  
+```
+Dear Pac,  
 This is the first exercise. Find out what's wrong and fix the code.  
 You have 15 minutes to send a solution.  
-Good Luck.</pre></code>
+Good Luck.
+```
 
 This code is a mess! Would you help Pac to fix the code in time?
 
