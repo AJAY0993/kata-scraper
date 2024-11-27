@@ -1,4 +1,4 @@
-Given 2 elevators (named "left" and "right") in a building with 3 floors (numbered `0` to `2`), write a function `elevator` accepting 3 arguments (in order):
+Given 2 elevators (named "left" and "right") in a building with 3 floors (numbered `0` to `2`), write a function accepting 3 arguments (in order):
 
 - `left` - The current floor of the left elevator
 - `right` - The current floor of the right elevator
@@ -12,38 +12,11 @@ You can assume that the inputs will always be valid integers between 0-2.
 
 Examples:
 
-```javascript
-elevator(0, 1, 0); // => "left"
-elevator(0, 1, 1); // => "right"
-elevator(0, 1, 2); // => "right"
-elevator(0, 0, 0); // => "right"
-elevator(0, 2, 1); // => "right"
 ```
-```python
-elevator(0, 1, 0) # => "left"
-elevator(0, 1, 1) # => "right"
-elevator(0, 1, 2) # => "right"
-elevator(0, 0, 0) # => "right"
-elevator(0, 2, 1) # => "right"
-```
-```kotlin
-elevator(0, 1, 0) // => "left"
-elevator(0, 1, 1) // => "right"
-elevator(0, 1, 2) // => "right"
-elevator(0, 0, 0) // => "right"
-elevator(0, 2, 1) // => "right"
-```
-```purescript
-elevator 0 1 0 -- => "left"
-elevator 0 1 1 -- => "right"
-elevator 0 1 2 -- => "right"
-elevator 0 0 0 -- => "right"
-elevator 0 2 1 -- => "right"
-```
-```racket
-(elevator 0 1 0) ; "left"
-(elevator 0 1 1) ; "right"
-(elevator 0 1 2) ; "right"
-(elevator 0 0 0) ; "right"
-(elevator 0 2 1) ; "right"
+left right call   result
+  0    1     0    "left"
+  0    1     1    "right"
+  0    1     2    "right"
+  0    0     0    "right"
+  0    2     1    "right"
 ```
