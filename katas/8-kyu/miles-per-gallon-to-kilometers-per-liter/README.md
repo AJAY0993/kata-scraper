@@ -2,10 +2,10 @@ Sometimes, I want to quickly be able to convert miles per imperial gallon (`mpg`
 
 Create an application that will display the number of kilometers per liter (output) based on the number of miles per imperial gallon (input).
 
-```if-not:swift
+```if-not:javascript,swift
 Make sure to round off the result to two decimal points.
 ```
-```if:swift
+```if:javascript,swift
 Your answer should be accurate within 0.01 kpl.
 ```
 

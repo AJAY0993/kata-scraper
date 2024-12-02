@@ -10,6 +10,15 @@ For input: `[3, 4, 4, 3, 6, 3]`
 
 Expected output: `[4, 6, 3]`
 
-More examples can be found in the test cases. 
+More examples can be found in the test cases.
+
+~~~if:lambdacalc
+### Encodings
+
+purity: `LetRec`  
+numEncoding: `BinaryScott`  
+
+export constructors `nil, cons` and deconstructor `foldr` for your `List` encoding.  
+~~~
 
 Good luck!

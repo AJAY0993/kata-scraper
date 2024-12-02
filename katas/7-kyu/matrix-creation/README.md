@@ -1,4 +1,4 @@
-Create an identity matrix of the specified size( >= 0).
+Create an identity matrix of the specified size ( `>= 0` ).
 
 Some examples:
 
@@ -13,5 +13,4 @@ Some examples:
 (5) =>   [0,0,1,0,0],
          [0,0,0,1,0],
          [0,0,0,0,1] ]   
-
 ```

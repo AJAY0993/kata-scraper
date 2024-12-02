@@ -1,61 +1,18 @@
-# Scenario
+Several people are standing in a row divided into two teams. The first person goes into team 1, the second goes into team 2, the third goes into team 1, and so on.
 
-**_Several people_** are standing in *a row divided into two teams*.  
-The **_first person_** goes into **_team 1_**, **_the second_** goes into **_team 2_**, **_the third_** goes into **_team 1_**, and so on.
-___
-# Task
+### Task
 
-**_Given_** *an array of positive integers (the weights of the people)*, **_return_** *a new array/tuple of two integers*, **_where_** **_the first_** one is the **_total weight of team 1_**, and **_the second_** one is the **_total weight of team 2_**.
-___
-# Notes 
+Given an **array of positive integers** (the weights of the people), return a new array / tuple of two integers (depending on your language), whereby the first one is the total weight of team 1, and the second one is the total weight of team 2. Note that the **array will never be empty**.
 
-* **_Array size_** is *at least 1*.
-* **_All numbers_** will be **positive**.
-___
-# Input >> Output Examples 
+### Examples 
 
-```cpp
-rowWeights([13, 27, 49])  ==>  return (62, 27)
-```
-```prolog
-row_weights([13, 27, 49], [62, 27]).
-```
-
-## **_Explanation_**:
-
-**_The first element_** `62` is *the total weight of team 1*, and **_the second element_** `27` is *the total weight of team 2*.
-___
-```cpp
-rowWeights([50, 60, 70, 80])  ==>  return (120, 140)
-```
-```prolog
-row_weights([50, 60, 70, 80], [120, 140]).
-```
-## **_Explanation_**:
-
-**_The first element_** `120` is *the total weight of team 1*, and **_the second element_** `140` is *the total weight of team 2*.
-___
-```cpp
-rowWeights([80])  ==>  return (80, 0)
-```
-```prolog
-row_weights([80], [80, 0]).
-```
-## **_Explanation_**:
-
-**_The first element_** `80` is *the total weight of team 1*, and **_the second element_** `0` is *the total weight of team 2*.
-___
-___
+- `[13, 27, 49]` returns `[62, 27]` or `(62, 27)` (depending on your language) because the total weight of team 1 is `$ 13 + 49 = 62 $` and the total weight of team 2 is `$ 27 $`.
+- `[50, 60, 70, 80]` returns `[120, 140]` or `(120, 140)`  (depending on your language) because the total weight of team 1 is `$ 50 + 70 = 120 $` and the total weight of team 2 is `$ 60 + 80 = 140 $`.
+- `[80]` returns `[80, 0]` or `(80, 0)`  (depending on your language) because the total weight of team 1 is `$ 80 $` and the total weight of team 2 is `$ 0 $`.
 ___
 
-# [Playing with Numbers Series](https://www.codewars.com/collections/playing-with-numbers)
+[Playing with Numbers Series](https://www.codewars.com/collections/playing-with-numbers)
 
-# [Playing With Lists/Arrays Series](https://www.codewars.com/collections/playing-with-lists-slash-arrays)
+[Playing With Lists/Arrays Series](https://www.codewars.com/collections/playing-with-lists-slash-arrays)
 
-# [For More Enjoyable Katas](http://www.codewars.com/users/MrZizoScream/authored)
-___
-
-## ALL translations are welcomed
-
-## Enjoy Learning !!
-# Zizou
+[For More Enjoyable Katas](http://www.codewars.com/users/MrZizoScream/authored)
