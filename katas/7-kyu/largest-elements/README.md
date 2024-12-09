@@ -18,8 +18,11 @@ largest(2, new int[]{7, 6, 5, 4, 3, 2, 1})
 largest 2 [7,6,5,4,3,2,1]
 -- => [6,7]
 ```
-
 ```csharp
 Kata.Largest(2, new List<int> {7, 6, 5, 4, 3, 2, 1}) => new List<int> {6, 7}
+```
+```groovy
+Kata.largest(2, [7, 6, 5, 4, 3, 2, 1])
+// => new int[]{6, 7}
 ```
 
