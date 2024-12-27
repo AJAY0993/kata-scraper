@@ -23,7 +23,7 @@ Thus, the EAN-Code is 400330101839**8** (12 digits followed by single-digit chec
  
 ## Your Task
 
-Validate a given EAN-Code. Return `True` if the given EAN-Code is valid, otherwise `False`.
+Validate a given EAN-Code. Return `True/true` if the given EAN-Code is valid, otherwise `False/false`.
 
 ## Assumption
 
@@ -31,38 +31,9 @@ You can assume the given code is syntactically valid, i.e. it only consists of n
 
 ## Examples
 
-```java
-EANValidator.validate("4003301018398") // true
-EANValidator.validate("4003301018392") // false
 ```
-```javascript
-validateEAN("4003301018398") // true
-validateEAN("4003301018392") // false
-```
-```coffeescript
-validateEAN('4003301018398') # true
-validateEAN('4003301018392') # false
-```
-
-```python
-validate_ean("4003301018398") # => True
-validate_ean("4003301018392") # => False
-```
-```ruby
-validate_ean("4003301018398") # => true
-validate_ean("4003301018392") # => false
-```
-```clojure
-(validate-ean "4003301018398") ; => true
-(validate-ean "4003301018392") ; => false
-```
-```csharp
-EANValidator.Validate("4003301018398") // true
-EANValidator.Validate("4003301018392") // false
-```
-```haskell
-validateEAN "4003301018398" -- True
-validateEAN "4003301018392" -- False
+"4003301018398" - True
+"4003301018392" - False
 ```
 
 
