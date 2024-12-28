@@ -32,3 +32,6 @@ fizzify(3, [1, 2, "Fizz"]).
 ```scala
 FizzBuzz.fizzify(3) // List("1", "2", "Fizz")
 ```
+```java
+FizzBuzzArray.fizzBuzz(3) -->  ["1", "2", "Fizz"]
+```
