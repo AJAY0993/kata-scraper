@@ -1,1 +1,0 @@
-const doors = s => Math.floor(Math.sqrt(s))
