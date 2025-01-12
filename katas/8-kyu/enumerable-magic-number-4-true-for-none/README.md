@@ -1,7 +1,3 @@
-Create a method **none?** (**JS** `none`) that accepts an array and a block (JS: a function), and returns true if the block (/function) returns true for *none* of the items in the array. An empty list should return true.
+Write a function that takes two arguments: an array and a callback function (in Ruby: a block).
 
-```if:ruby
-**Ruby**: If you need help, here is a reference:
-
-http://www.rubycuts.com/enum-none
-```
+The function should return `true` if the callback / block returns `false` for **all** of the items in the array, or if the array is empty; otherwise return `false`.
