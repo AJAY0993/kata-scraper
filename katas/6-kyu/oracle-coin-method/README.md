@@ -1,4 +1,4 @@
-###Introduction
+### Introduction
 
 The [I Ching](https://en.wikipedia.org/wiki/I_Ching) (Yijing, or Book of Changes) is an ancient Chinese book of sixty-four hexagrams. 
 A hexagram is a figure composed of six stacked horizontal lines, where each line is either Yang (an unbroken line) or Yin (a broken line):
@@ -15,11 +15,12 @@ each line is determined by random methods to be Yang or Yin. The resulting hexag
 
 This kata will consult the I Ching using the three coin method.
 
-###Instructions
+### Instructions
 
 A coin is flipped three times and lands heads
 or tails. The three results are used to
 determine a line as being either:
+
 ```
 3 tails          ----x----  Yin (Moving Line*)
 2 tails 1 heads  ---------  Yang
@@ -39,11 +40,8 @@ In each array the first index will always be the number of the line ('one' is th
 
 Write a function that will take a 2D Array like the above as argument and return its hexagram as a string. Each line of the hexagram should begin on a new line.
 
-```javascript
-oracle([['two','h','h','t'],['six','t','h','t'],['four','t','t','t'], 
-['one','h','t','h'],['three','h','h','h'],['five','t','t','h']]);
-```
-should return:
+Given the above 2D Array, your function should return:
+
 ```
 ---------
 ---------
@@ -52,6 +50,7 @@ should return:
 ---- ----
 ---- ----
 ```
+
 You are welcome to consult your new oracle program with a question before pressing submit. You can compare your result [here](http://www.ichingfortune.com/hexagrams.php). The last test case is random and can be used for your query.
 
 *[1] A Moving Line is a Yang line that will change
