@@ -1,6 +1,6 @@
 Hey Codewarrior! 
 
-You already implemented a <b>Cube</b> class, but now we need your help again! I'm talking about constructors. We don't have one. Let's code one (or more) such that one can instantiate an object via it, handling either no arguments or a single integer.
+In the [previous kata](https://www.codewars.com/kata/55c0a79e20be94c91400014b), you have implemented a **Cube** class, but now we need your help again! I'm talking about constructors. We don't have one. Let's code one (or more) such that one can instantiate an object via it, handling either no arguments or a single integer.
 
 
 Also we got a problem with negative values. Correct the code so negative values will be switched to positive ones!
