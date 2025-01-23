@@ -40,3 +40,7 @@ fives(myArray);                  //returns [5, 10, 15];
 5 factory              ! returns a quotation
 call( seq -- newseq )  ! returns { 5 10 15 }
 ```
+```ocaml
+let fives = factory 5;; (* returns a function  *)
+fives [1; 2; 3];;       (* returns [5; 10; 15] *)
+```
