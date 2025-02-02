@@ -1,54 +1,53 @@
-# Task : 
+### Task
 
-**_Given_** *a List [] of n integers* , **_find minimum number_** to be **inserted** in a *list*, so that **_sum of all elements of list_** should *equal the closest prime number* .
-___
-# Notes
+Given a list of positive integers, determine the **minimum number** that needs to be inserted so that the **sum of all elements** becomes the **nearest prime number**.
 
-* **_List size_** is *at least 2* .
+### Notes
 
-* **_List's numbers_** will only **_positives_** (n > 0) .
+- The list will always have **at least 2 elements**.
+- All elements will be **positive integers** (`n > 0`).
+- The list **may contain duplicate values**.
+- The new sum must be the **closest prime number**.
 
-* **_Repetition_** of numbers in the list **_could occur_** .
-
-* **_The newer list's sum_** should *equal the closest prime number* . 
-___
-
-# Input >> Output Examples
+### Examples
 
 ```cpp
-1- minimumNumber ({3,1,2}) ==> return (1)
+minimumNumber({3, 1, 2})  // ➞ 1
 ```
-## **_Explanation_**:
 
-* **_Since_** , **the sum** of the list's elements equal to **_(6)_** , *the minimum number to be inserted to transform the sum to prime number* is **_(1)_** , *which will make **_the sum of the List_** equal the closest prime number **_(7)_*** .
-___
+**Explanation:**  
+- The sum of `[3, 1, 2]` is `6`.  
+- The closest prime number is `7`.  
+- We need to insert `1` to reach `7`.
+
+---
 
 ```cpp
-2-  minimumNumber ({2,12,8,4,6}) ==> return (5)
+minimumNumber({2, 12, 8, 4, 6})  // ➞ 5
 ```
-## **_Explanation_**: 
 
-* **_Since_** , **the sum** of the list's elements equal to **_(32)_** , *the minimum number to be inserted to transform the sum to prime number* is **_(5)_** , *which will make **_the sum of the List_** equal the closest prime number **_(37)_*** .
-___
+**Explanation:**  
+- The sum of `[2, 12, 8, 4, 6]` is `32`.  
+- The closest prime number is `37`.  
+- We need to insert `5` to reach `37`.
+
+---
 
 ```cpp
-3- minimumNumber ({50,39,49,6,17,28}) ==> return (2)
+minimumNumber({50, 39, 49, 6, 17, 28})  // ➞ 2
 ```
-## **_Explanation_**: 
 
-* **_Since_** , **the sum** of the list's elements equal to **_(189)_** , *the minimum number to be inserted to transform the sum to prime number* is **_(2)_** , *which will make **_the sum of the List_** equal the closest prime number **_(191)_*** .
-___
-___
-___
+**Explanation:**  
+- The sum of `[50, 39, 49, 6, 17, 28]` is `189`.  
+- The closest prime number is `191`.  
+- We need to insert `2` to reach `191`.
 
-# [Playing with Numbers Series](https://www.codewars.com/collections/playing-with-numbers)
+---
 
-# [Playing With Lists/Arrays Series](https://www.codewars.com/collections/playing-with-lists-slash-arrays)
+For more challenges, check out [Playing with Numbers Series](https://www.codewars.com/collections/playing-with-numbers).
 
-# [For More Enjoyable Katas](http://www.codewars.com/users/MrZizoScream/authored)
-___
+Enjoy coding!
 
-## ALL translations are welcomed
-
-## Enjoy Learning !!
-# Zizou
+- [Playing with Numbers Series](https://www.codewars.com/collections/playing-with-numbers)
+- [Playing With Lists/Arrays Series](https://www.codewars.com/collections/playing-with-lists-slash-arrays)
+- [For More Enjoyable Katas](http://www.codewars.com/users/MrZizoScream/authored)

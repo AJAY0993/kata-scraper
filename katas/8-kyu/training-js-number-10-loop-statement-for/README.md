@@ -1,9 +1,9 @@
-The ```for``` loop is a very frequently used loop in JS. 
+The `for` loop is a very frequently used loop in JS. 
 
 Recall in lesson 9 we wrote a `while` loop:
 ```javascript
 function sum1_100(){
-  var sum=0,num=1
+  let sum=0,num=1
   while (num<=100){
     sum+=num;
     num++;
@@ -14,21 +14,21 @@ function sum1_100(){
 We can rewrite it using a `for` loop, like this:
 ```javascript
 function sum1_100(){
-  for (var sum=0,num=1;num<=100;num++){
+  for (let sum=0,num=1;num<=100;num++){
     sum+=num;
   }
   return sum;
 }
 ```
 
-As you see, there are three parts in the parentheses, separated by "```;```". The first part, `var sum=0,num=1`, is the initialization. This part will run before the loop starts. The second part, `num<=100` is the conditional expression. The conditional expression is checked before the start of each time through the loop. When the value of the expression is false, the loop will be terminated. The third part, `num++` will run after the code block, and is usually used for increasing and decreasing variables.
+As you see, there are three parts in the parentheses, separated by "`;`". The first part, `var sum=0,num=1`, is the initialization. This part will run before the loop starts. The second part, `num<=100` is the conditional expression. The conditional expression is checked before the start of each time through the loop. When the value of the expression is false, the loop will be terminated. The third part, `num++` will run after the code block, and is usually used for increasing and decreasing variables.
 
 For the example above, the running order of the code is:
 ```javascript
                               <--- back to part 2
                   -------------------------------------------
                   |                 true                    |
-var sum=0,num=1  --->  num<=100 ?  ------> code block---> num++
+let sum=0,num=1  --->  num<=100 ?  ------> code block---> num++
                                 |  
                            false|
                        loop terminated
@@ -37,26 +37,25 @@ var sum=0,num=1  --->  num<=100 ?  ------> code block---> num++
 When you need to traverse an array, you can use the `for` loop to access each element using its index. Here's an example:
 ```javascript
 function displayElements(array){
-  for (var i=0;i<array.length;i++){
+  for (let i=0;i<array.length;i++){
     console.log(array[i]);
   }
 }
 ```
 This function will display every element of the array on your screen.
 
-Ok, lesson is over, let's do a task with ```for```.
+Ok, lesson is over, let's do a task with `for`.
 
-## Task
+### Task
 
-The function ```pickIt``` accepts 1 parameter, ```arr```, which is an array of numbers. We need to traverse ```arr``` by using a ```for``` loop. If an element is an odd number, push it to the ```odd``` array, and if it's an even number, push it to the ```even```array.
+The function `pickIt` accepts 1 parameter, `arr`, which is an array of numbers. We need to traverse `arr` by using a `for` loop. If an element is an odd number, push it to the `odd` array, and if it's an even number, push it to the `even`array.
     
-I've defined two arrays ```odd``` and ```even``` in the function, and also wrote the return statement. **Your work is to write a `for` loop.**
+I've defined two arrays `odd` and `even` in the function, and also wrote the return statement. **Your work is to write a `for` loop.**
     
 If you forgot how to push an element to an array, please refer to [lesson 4](http://www.codewars.com/kata/571effabb625ed9b0600107a).
     
-## [Series](http://github.com/myjinxin2015/Katas-list-of-Training-JS-series)
+### [Series](http://github.com/myjinxin2015/Katas-list-of-Training-JS-series)
 
-( ↑↑↑ Click the link above can get my newest kata list, Please add it to your favorites)
 
  - [#1: create your first JS function helloWorld](http://www.codewars.com/kata/571ec274b1c8d4a61c0000c8)
  - [#2: Basic data types--Number](http://www.codewars.com/kata/571edd157e8954bab500032d)
