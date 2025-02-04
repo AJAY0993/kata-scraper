@@ -1,8 +1,12 @@
-You are given two sorted arrays that both only contain integers. Your task is to find a way to merge them into a single one, sorted in asc order. Complete the function mergeArrays(arr1, arr2), where arr1 and arr2 are the original sorted arrays.
+You are given two sorted arrays that contain only integers. These arrays may be sorted in either ascending or descending order. Your task is to merge them into a single array, ensuring that:
 
-You don't need to worry about validation, since arr1 and arr2 must be arrays with 0 or more Integers. If both arr1 and arr2 are empty, then just return an empty array.
+* The resulting array is sorted in ascending order.
 
-Note: arr1 and arr2 may be sorted in different orders. Also arr1 and arr2 may have same integers. Remove duplicated in the returned result.
+* Any duplicate values are removed, so each integer appears only once.
+
+* If both input arrays are empty, return an empty array.
+
+No input validation is needed, as both arrays are guaranteed to contain zero or more integers.
 
 ## Examples (input -> output)
 ```

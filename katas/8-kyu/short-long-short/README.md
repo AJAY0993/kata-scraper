@@ -11,7 +11,3 @@ For example: **(Input1, Input2) --> output**
 ("22", "1") --> "1221"
 ```
 
-```java
-ShortLongShort.solution("1", "22"); // returns "1221"
-ShortLongShort.solution("22", "1"); // returns "1221"
-```

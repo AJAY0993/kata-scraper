@@ -9,7 +9,7 @@ The first input byte will be `n`. Following bytes will be characters of `string`
 "\5Hello" -> "HelloHelloHelloHelloHello"
 ~~~
 
-Write a function that accepts an integer `n` and a string `s` as parameters, and returns a string of `s` repeated exactly `n` times.
+Write a function that accepts a non-negative integer `n` and a string `s` as parameters, and returns a string of `s` repeated exactly `n` times.
 
 ### Examples (input -> output)
 
