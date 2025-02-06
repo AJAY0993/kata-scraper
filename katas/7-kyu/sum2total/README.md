@@ -1,41 +1,45 @@
-Write a function that takes an array/list of numbers and returns a number such that 
+Given a list of numbers, repeatedly sum adjacent pairs of numbers until only one number remains. 
 
-Explanation
-total([1,2,3,4,5]) => 48
-<pre>
-1+2=3--\ 3+5 =>     8 \
-2+3=5--/ \            ==  8+12=>20\     
-          ==>5+7=> 12 / \           20+28 => 48
-3+4=7--\ /            == 12+16=>28/
-4+5=9--/ 7+9 =>     16  /
-</pre><br/>
+## Explanation
 
-if total([1,2,3]) => 8 then 
+If the list is `[1, 2, 3, 4, 5]`, the first step would be:
 
-<pre>
-first+second => 3 \
-                   then 3+5 => 8
-second+third => 5 /
-</pre><br/>
+* `1 + 2 = 3`
 
-### Examples
-```javascript
-total([-1,-1,-1]) => -4
-total([1,2,3,4])  => 20
-```
-```python
-total([-1,-1,-1]) => -4
-total([1,2,3,4])  => 20
-```
-```ruby
-total([-1,-1,-1]) => -4
-total([1,2,3,4])  => 20
-```
-```haskell
-total [1..5]     `shouldBe` (48)
-total [5,4..1]   `shouldBe` (48)
-total [-1,-1,-1] `shouldBe` (-4)
-total [1,2,3,4]  `shouldBe` (20)
-```
+* `2 + 3 = 5`
 
-**Note:** each array/list will have at least an element and all elements will be valid numbers.
+* `3 + 4 = 7`
+
+* `4 + 5 = 9`
+
+Take the results from the first step and repeat the process of adding adjacent pairs:
+
+* `3 + 5 = 8`
+
+* `5 + 7 = 12`
+
+* `7 + 9 = 16`
+
+Continue this process until only one number remains:
+
+* `8 + 12 = 20`
+
+* `12 + 16 = 28`
+
+Finally, 
+
+* `20 + 28 = 48`
+
+The final result for the list `[1, 2, 3, 4, 5]` is `48`.
+
+## Examples
+
+* For the list `[-1, -1, -1]`, the result is `-4`.
+
+* For the list `[1, 2, 3, 4]`, the result is `20`.
+
+## Note
+
+* The input list will always contain at least one number.
+
+* All elements in the list will be valid numbers.
