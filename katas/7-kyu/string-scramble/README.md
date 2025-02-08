@@ -1,14 +1,23 @@
-Given a string and an array of index numbers, return the characters of the string rearranged to be in the order specified by the accompanying array.
+Given a string and an array of indices, rearrange the characters of the string so that each character is placed at the position specified by the corresponding index in the array.
 
-Ex:
+## Examples
 
-scramble('abcd', [0,3,1,2]) -> 'acdb' 
+**Input**: `'abcd'`, `[0, 3, 1, 2]`
 
-The string that you will be returning back will have: 'a' at index 0, 'b' at index 3, 'c' at index 1, 'd' at index 2, because the order of those characters maps to their corresponding numbers in the index array. 
+**Output**: `'acdb'`
 
+**Explanation:**
 
-In other words, put the first character in the string at the index described by the first element of the array
+* The character `'a'` is placed at index `0`.
 
+* The character `'b'` is placed at index `3`.
 
+* The character `'c'` is placed at index `1`.
 
-You can assume that you will be given a string and array of equal length and both containing valid characters (A-Z, a-z, or 0-9).
+* The character `'d'` is placed at index `2`.
+
+## Notes
+
+* The string and the array will always be of equal length.
+
+* Both the string and the array will contain valid characters (A-Z, a-z, or 0-9).
