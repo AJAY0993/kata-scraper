@@ -4,9 +4,9 @@
 
 ### Examples
 
-```
-replace("Hi!") === "H!!"
-replace("!Hi! Hi!") === "!H!! H!!"
-replace("aeiou") === "!!!!!"
-replace("ABCDE") === "!BCD!"
+```javascript
+"Hi!" --> "H!!"
+"!Hi! Hi!" --> "!H!! H!!"
+"aeiou" --> "!!!!!"
+"ABCDE" --> "!BCD!"
 ```
