@@ -22,10 +22,11 @@ async function scrapeKatasSolution(
 ) {
   console.log("scrapeKatasSolution")
   try {
-    browser = await puppeteer.launch({
-      headless: process.env.NODE_ENV !== "development",
-      timeout: 10000
-    })
+     browser = await puppeteer.launch({
+              args: ['--no-sandbox', '--disable-setuid-sandbox'],
+              headless: process.env.NODE_ENV !== "development",
+              timeout: 10000
+            });
   } catch (err) {
     console.log("Error during browser launch 💥", err)
     return
