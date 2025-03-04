@@ -1,0 +1,1 @@
+const isItLetter = c => c.toLowerCase().charCodeAt() >= 97 && c.toLowerCase().charCodeAt() <= 122
